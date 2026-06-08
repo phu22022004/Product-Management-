@@ -19,17 +19,14 @@ module.exports.index = async (req, res) => {
   }
   // Pagination
   const countProducts = await Product.countDocuments(find);
-  let objectPagination = {
-    currentPage: 1,
-    limitItems: 3,
-  };
-  if (req.query.page) {
-    objectPagination.currentPage = parseInt(req.query.page);
-  }
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItems;
-  const totalPage = Math.ceil(countProducts / objectPagination.limitItems);
-  objectPagination.totalPage = totalPage;
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItems: 3,
+    },
+    req.query,
+    countProducts,
+  );
   // End pagination
 
   const products = await Product.find(find)

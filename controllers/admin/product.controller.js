@@ -77,7 +77,10 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
   // await Product.deleteOne({ _id: id }); // Xóa vĩnh viễn
-  await Product.updateOne({ _id: id }, { deleted: true }); //xóa mềm
+  await Product.updateOne(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() },
+  ); //xóa mềm
 
   const referer = req.get("Referrer") || req.get("Referer");
   const redirectUrl = referer || req.baseUrl || "/admin/products";

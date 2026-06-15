@@ -20,3 +20,20 @@ if (buttonsChangeStatus.length > 0) {
 }
 
 // End change status
+
+// delete button
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete.length > 0) {
+  const formDeleteItem = document.querySelector("#form-delete-id");
+  const path = formDeleteItem.getAttribute("data-path");
+  buttonDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      console.log(id);
+      const action = path + `/${id}?_method=DELETE`;
+      formDeleteItem.action = action;
+      formDeleteItem.submit();
+    });
+  });
+}
+// End delete button

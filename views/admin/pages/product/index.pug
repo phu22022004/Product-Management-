@@ -36,7 +36,7 @@ block main
                     th Hình ảnh
                     th Tiêu đề
                     th Giá
-                    //- th Vị trí
+                    th Vị trí
                     th Trạng thái
                     th Hành động
                 tbody
@@ -53,14 +53,14 @@ block main
                             img(src = items.thumbnail, alt=items.title, width="100", height="auto")
                         td #{items.title}
                         td #{items.price}$
-                        //- td 
-                        //-     input(
-                        //-         type="number"
-                        //-         value=items.position 
-                        //-         style="width: 60px"
-                        //-         min="1"
-                        //-         name="position"
-                        //-     )
+                        td 
+                            input(
+                                type="number"
+                                value=items.position 
+                                style="width: 60px"
+                                min="1"
+                                name="position"
+                            )
                         td
                             if(items.status == "active")
                                 a(

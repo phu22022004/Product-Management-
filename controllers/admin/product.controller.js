@@ -46,7 +46,7 @@ module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
   await Product.updateOne({ _id: id }, { status: status });
-
+  req.flash("success", "Thay đổi trạng thái thành công!");
   const referer = req.get("Referrer") || req.get("Referer");
   const redirectUrl = referer || req.baseUrl || "/admin/products";
 
@@ -59,10 +59,18 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash(
+        "success",
+        `Cập nhật trạng thái ${ids.length} sản phẩm thành công!`,
+      );
       break;
 
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash(
+        "success",
+        `Cập nhật trạng thái ${ids.length} sản phẩm thành công!`,
+      );
       break;
 
     case "delete-all":
@@ -70,6 +78,7 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         { deleted: true, deletedAt: new Date() },
       );
+      req.flash("success", `Xóa thành công ${ids.length} sản phẩm!`);
       break;
 
     case "change-position":
@@ -77,7 +86,10 @@ module.exports.changeMulti = async (req, res) => {
         let [id, position] = items.split("-");
         await Product.updateOne({ _id: id }, { position: position });
       }
-
+      req.flash(
+        "success",
+        `Thay đổi vị trí ${ids.length} sản phẩm thành công!`,
+      );
       break;
 
     default:
@@ -97,7 +109,7 @@ module.exports.deleteItem = async (req, res) => {
     { _id: id },
     { deleted: true, deletedAt: new Date() },
   ); //xóa mềm
-
+  req.flash("success", "Xóa sản phẩm thành công!");
   const referer = req.get("Referrer") || req.get("Referer");
   const redirectUrl = referer || req.baseUrl || "/admin/products";
 

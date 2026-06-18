@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helper/filter-status.js");
+const systemConfig = require("../../config/system.js");
 const searchHelper = require("../../helper/search.js");
 const paginationHelper = require("../../helper/pagination.js");
 // [GET] /admin/products
@@ -114,4 +115,27 @@ module.exports.deleteItem = async (req, res) => {
   const redirectUrl = referer || req.baseUrl || "/admin/products";
 
   res.redirect(redirectUrl);
+};
+
+// [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/product/create.pug", {
+    pageTitle: "Tạo sản phẩm mới",
+  });
+};
+
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  if (req.body.position == "") {
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+  const product = new Product(req.body);
+  await product.save();
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };

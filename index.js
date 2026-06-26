@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("views", "./views");
 app.set("view engine", "pug");
+app.use(express.static("public"));
 
 //Flash
 app.use(cookieParser("phuIT"));
@@ -29,8 +30,6 @@ app.use(flash());
 
 //App locals variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
-
-app.use(express.static("public"));
 
 route(app);
 routeAdmin(app);

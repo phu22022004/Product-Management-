@@ -130,16 +130,24 @@ if (showAlert) {
   });
 }
 
-//Upload inmage
+//Upload inmage and  deselect image
 const uploadImage = document.querySelector("[upload-image]");
 if (uploadImage) {
   const uploadImageInput = document.querySelector("[upload-image-input]");
   const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  const closeImage = document.querySelector(".close-image-button");
   uploadImageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
       uploadImagePreview.src = URL.createObjectURL(file);
+      closeImage.innerHTML =
+        "<span close-image class='deselect-image'>x</span>";
+      closeImage.addEventListener("click", () => {
+        uploadImageInput.value = "";
+        uploadImagePreview.src = "";
+        closeImage.innerHTML = "";
+      });
     }
   });
 }
-//End upload inmage
+//End upload inmage and  deselect image

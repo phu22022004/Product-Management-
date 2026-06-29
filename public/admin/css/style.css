@@ -166,4 +166,15 @@
 .image-preview[src=""] {
   display: none;
 }
+[close-image] {
+  background: #292ebcc4;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 50%;
+  cursor: pointer;
+}
 /* End Image Preview */

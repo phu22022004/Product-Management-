@@ -26,3 +26,5 @@ router.patch(
   productController.editPatch,
 );
 module.exports = router;
+
+router.get("/detail/:id", productController.detail);

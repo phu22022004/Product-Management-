@@ -7,6 +7,8 @@ block main
 
     h1(class="mb-4") Chỉnh sửa sản phẩm
 
+
+
     form(
         action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
         id="form-create-edit"
@@ -101,8 +103,9 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked=(product.status == "active" ? true : "")
-        )
+                checked=product.status == "active"
+                
+            )
             label(for="statusActive" class="form-check-label") Hoạt động
         div(class="form-group form-check form-check-inline")
             input(
@@ -111,14 +114,15 @@ block main
                 id="statusInActive"
                 name="status"
                 value="inactive"
-                checked=(product.status == "inactive" ? true : "")
-        )
+                checked=product.status == "inactive"
+            )
             label(for="statusInActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
         ) Cập nhật
+       
 
 
     script(src="/admin/js/products.js")

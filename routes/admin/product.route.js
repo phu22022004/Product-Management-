@@ -28,6 +28,7 @@ router.patch(
   validate.createPost,
   productController.editPatch,
 );
-module.exports = router;
 
 router.get("/detail/:id", productController.detail);
+
+module.exports = router;

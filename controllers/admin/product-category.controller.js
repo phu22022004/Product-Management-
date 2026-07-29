@@ -40,3 +40,20 @@ module.exports.createPost = async (req, res) => {
   await record.save();
   res.redirect(`${systemConfig.prefixAdmin}/products-category`);
 };
+// [GET] /admin/products-category/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const record = await ProductCategory.findOne(find);
+    // const newRecord = createTreeHelper.tree(record);
+    res.render("admin/pages/products-category/detail.pug", {
+      pageTitle: "Chi tiết danh mục sản phẩm",
+      record: record,
+    });
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  }
+};

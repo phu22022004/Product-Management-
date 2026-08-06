@@ -48,6 +48,7 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH]/admin/roles/edit/:id
 module.exports.editPatch = async (req, res) => {
+  console.log(req.body);
   try {
     const id = req.params.id;
 
@@ -59,6 +60,34 @@ module.exports.editPatch = async (req, res) => {
   const referer = req.get("Referrer") || req.get("Referer");
   const redirectUrl =
     referer || req.baseUrl || `${systemConfig.prefixAdmin}/roles`;
+
+  res.redirect(redirectUrl);
+};
+
+// [GET]/admin/roles/permissions
+module.exports.permissions = async (req, res) => {
+  let find = {
+    deleted: false,
+  };
+  const records = await Role.find(find);
+  res.render("admin/pages/roles/permissions.pug", {
+    pageTitlte: "Phân quyền",
+    records: records,
+  });
+};
+
+// [PATCH]/admin/roles/permissions
+module.exports.permissionsPatch = async (req, res) => {
+  console.log(req.body);
+  const permissions = JSON.parse(req.body.permissions);
+  for (const item of permissions) {
+    await Role.updateOne({ _id: item.id }, { permission: item.permissions });
+  }
+  req.flash("success", "Cập nhật phân quyền thành công!");
+
+  const referer = req.get("Referrer") || req.get("Referer");
+  const redirectUrl =
+    referer || req.baseUrl || `${systemConfig.prefixAdmin}/roles/permissions`;
 
   res.redirect(redirectUrl);
 };

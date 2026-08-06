@@ -3,7 +3,7 @@ const roleSchema = new mongoose.Schema(
   {
     title: String,
     description: String,
-    premission: {
+    permission: {
       type: Array,
       default: [],
     },

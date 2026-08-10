@@ -34,5 +34,13 @@ module.exports.loginPost = async (req, res) => {
     res.redirect(redirectUrl);
     return;
   }
+  if (user.status == "inactive") {
+    req.flash("error", "Tài khoản đã bị khóa!");
+    const referer = req.get("Referrer") || req.get("Referer");
+    const redirectUrl =
+      referer || req.baseUrl || `${systemConfig.prefixAdmin}/accounts/create`;
+    res.redirect(redirectUrl);
+    return;
+  }
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 };

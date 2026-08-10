@@ -42,5 +42,6 @@ module.exports.loginPost = async (req, res) => {
     res.redirect(redirectUrl);
     return;
   }
+  res.cookie("token", user.token);
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 };

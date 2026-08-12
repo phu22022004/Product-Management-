@@ -98,7 +98,13 @@ module.exports.changeMulti = async (req, res) => {
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
-        { deleted: true, deletedAt: new Date() },
+        {
+          deleted: true,
+          deletedBy: {
+            account_id: res.locals.user.id,
+            deletedAt: new Date(),
+          },
+        },
       );
       req.flash("success", `Xóa thành công ${ids.length} sản phẩm!`);
       break;
@@ -129,7 +135,13 @@ module.exports.deleteItem = async (req, res) => {
   // await Product.deleteOne({ _id: id }); // Xóa vĩnh viễn
   await Product.updateOne(
     { _id: id },
-    { deleted: true, deletedAt: new Date() },
+    {
+      deleted: true,
+      deletedBy: {
+        account_id: res.locals.user.id,
+        deletedAt: new Date(),
+      },
+    },
   ); //xóa mềm
   req.flash("success", "Xóa sản phẩm thành công!");
   const referer = req.get("Referrer") || req.get("Referer");

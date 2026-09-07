@@ -63,7 +63,6 @@ module.exports.index = async (req, res) => {
       });
       updatedBy.accountFullName = userUpdated.fullName;
     }
-    console.log(product);
   }
   res.render("admin/pages/product/index.pug", {
     pageTitle: "Danh sách sản phẩm",

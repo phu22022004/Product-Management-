@@ -6,10 +6,17 @@ block main
   h1 Trang chủ
 
   .section-products-featured.my-5
-  .container
-    .row
-      .col-12
-        +box-head("Sản phẩm nổi bật")
+    .container
+      .row
+        .col-12
+          +box-head("Sản phẩm nổi bật")
 
-    +product-grid(productsFeatured)
+      +product-grid(productsFeatured)
     
+  .section-products-new.my-5
+    .container
+      .row
+        .col-12
+          +box-head("Sản phẩm mới nhất")
+
+      +product-grid(productsNew)

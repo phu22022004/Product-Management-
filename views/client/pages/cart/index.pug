@@ -3,10 +3,10 @@ include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
+    +alert-success(5000)
+    +alert-error(5000)
 
-  .container.my-3
+    .container.my-3
         .row
             .col-12
                 +box-head("Giỏ hàng")
@@ -55,3 +55,5 @@ block main
 
                 div(class="text-right mt-3")
                     a(href="/checkout" class="btn btn-success") THANH TOÁN
+
+    script(src="/js/cart.js") 

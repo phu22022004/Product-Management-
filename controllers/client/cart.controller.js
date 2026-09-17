@@ -67,3 +67,19 @@ module.exports.addPost = async (req, res) =>{
 
     res.redirect(redirectUrl);
 }
+// [GET] /cart/delete/:productId
+module.exports.delete = async (req, res) =>{
+    const cartId = req.cookies.cartId;
+    const productId = req.params.productId;
+    await Cart.updateOne({
+        _id: cartId,
+    },{
+        "$pull":{products:{"product_id":productId}}
+    })
+    req.flash("success","Đã xoá sản phẩm thành công!");
+    const referer = req.get("Referrer") || req.get("Referer");
+    const redirectUrl = referer || req.baseUrl || "/cart";
+
+    res.redirect(redirectUrl);
+
+}

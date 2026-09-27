@@ -22,3 +22,21 @@ module.exports.registerPost = (req, res, next) => {
   }
   next();
 };
+
+module.exports.loginPost = (req, res, next) => {
+  if (!req.body.email) {
+    req.flash("error", "Vui lòng nhập email!");
+    const referer = req.get("Referrer") || req.get("Referer");
+    const redirectUrl = referer || req.baseUrl || "/user/login";
+    res.redirect(redirectUrl);
+    return;
+  }
+  if (!req.body.password) {
+    req.flash("error", "Vui lòng nhập mật khẩu!");
+    const referer = req.get("Referrer") || req.get("Referer");
+    const redirectUrl = referer || req.baseUrl || "/user/login";
+    res.redirect(redirectUrl);
+    return;
+  }
+  next();
+};

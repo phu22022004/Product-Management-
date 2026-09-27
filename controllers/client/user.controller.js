@@ -26,3 +26,46 @@ module.exports.registerPost = async (req, res) => {
     res.cookie("tokenUser",user.tokenUser);
     res.redirect("/");
 };
+
+// [GET] /user/login
+module.exports.login = async (req, res) => {
+    res.render("client/pages/user/login",{
+        pageTitle:"Đăng nhập tài khoản",
+    });
+};
+
+// [POST] /user/login
+module.exports.loginPost = async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await User.findOne({
+        email: email,
+        deleted: false
+    });
+
+    if(!user) {
+        req.flash("error", `Email không tồn tại!`);
+        const referer = req.get("Referrer") || req.get("Referer");
+        const redirectUrl = referer || req.baseUrl || "/user/login";
+        res.redirect(redirectUrl);
+        return;
+    }
+
+    if(md5(password) != user.password) {
+        req.flash("error", `Sai mật khẩu!`);
+        const referer = req.get("Referrer") || req.get("Referer");
+        const redirectUrl = referer || req.baseUrl || "/user/login";
+        res.redirect(redirectUrl);
+        return;
+    }
+
+    if(user.status == "inactive") {
+        req.flash("error", `Tài khoản đã bị khoá!`);
+        const referer = req.get("Referrer") || req.get("Referer");
+        const redirectUrl = referer || req.baseUrl || "/user/login";
+        res.redirect(redirectUrl);
+        return;
+    }
+    res.cookie("tokenUser",user.tokenUser);
+    res.redirect("/")
+};

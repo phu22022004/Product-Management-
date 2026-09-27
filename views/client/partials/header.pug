@@ -29,15 +29,16 @@ header.header
             .col-4
                 .inner-menu
                     ul
-                        li
-                            a(href="/") Trang chủ
-                        li(class="sub-menu")
-                            -const pathProduct = "/products";
-                            a(href=pathProduct) Sản phẩm
-                            +sub-menu(layoutProductsCategory, pathProduct)
-                        li 
-                            a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
                         if(user)
+                            li
+                                a(href="/") Trang chủ
+                            li(class="sub-menu")
+                                -const pathProduct = "/products";
+                                a(href=pathProduct) Sản phẩm
+                                +sub-menu(layoutProductsCategory, pathProduct)
+                            li 
+                                a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
+                            
                             li 
                                 a(href="/user/logout") Đăng xuất
                         else

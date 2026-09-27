@@ -7,4 +7,8 @@ router.post("/register",userValidate.registerPost, userController.registerPost);
 router.get("/login", userController.login);
 router.post("/login", userValidate.loginPost,userController.loginPost);
 router.get("/logout", userController.logout);
+router.get("/password/forgot", userController.forgotPassword);
+router.post("/password/forgot", userValidate.forgotPasswordPost,userController.forgotPasswordPost);
+router.get("/password/otp", userController.otpPassword);
+router.post("/password/otp", userController.otpPasswordPost);
 module.exports = router;

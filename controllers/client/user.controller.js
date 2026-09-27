@@ -18,6 +18,7 @@ module.exports.registerPost = async (req, res) => {
         const referer = req.get("Referrer") || req.get("Referer");
         const redirectUrl = referer || req.baseUrl || "/user/register";
         res.redirect(redirectUrl);
+        return;
     }
     req.body.password = md5(req.body.password)
     const user = new User(req.body);

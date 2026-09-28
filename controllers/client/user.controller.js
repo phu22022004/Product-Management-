@@ -136,17 +136,40 @@ module.exports.otpPasswordPost = async (req, res) => {
     email: email,
     otp: otp,
   });
-  if(!result){
-    req.flash("error",`OTP không hợp lệ!`);
+  if (!result) {
+    req.flash("error", `OTP không hợp lệ!`);
     const referer = req.get("Referrer") || req.get("Referer");
     const redirectUrl = referer || req.baseUrl || "/user/password/otp";
     res.redirect(redirectUrl);
     return;
   }
   const user = await User.findOne({
-    email:email,
-  })
-  res.cookie("tokenUser",user.tokenUser);
+    email: email,
+  });
+  res.cookie("tokenUser", user.tokenUser);
 
   res.redirect("/user/password/reset");
+};
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+  res.render("client/pages/user/reset-password", {
+    pageTitle: "Đổi mật khẩu",
+  });
+};
+
+// [POST] /user/password/reset
+module.exports.resetPasswordPost = async (req, res) => {
+  const password = req.body.password;
+  const tokenUser = req.cookies.tokenUser;
+
+  await User.updateOne(
+    {
+      tokenUser: tokenUser,
+    },
+    {
+      password: md5(password),
+    },
+  );
+
+  res.redirect("/");
 };

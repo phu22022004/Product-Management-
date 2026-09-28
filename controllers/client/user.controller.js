@@ -3,6 +3,7 @@ const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
 const generateHelper = require("../../helper/generate");
 const sendMailHelper = require("../../helper/sendMail");
+const Cart = require("../../models/cart.model");
 // [GET] /user/register
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register", {
@@ -70,6 +71,13 @@ module.exports.loginPost = async (req, res) => {
     return;
   }
   res.cookie("tokenUser", user.tokenUser);
+
+// Lưu user_id vào collection carts
+  await Cart.updateOne({
+    _id:req.cookies.cartId,
+  },{
+    user_id:user.id,
+  })
   res.redirect("/");
 };
 
